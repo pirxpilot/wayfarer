@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "noop2": "^2.0.0",
-    "standard": "^14.3.1",
+    "standard": "~17",
     "tape": "^4.6.2"
   },
   "files": [

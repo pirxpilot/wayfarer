@@ -1,139 +1,138 @@
-/* eslint-disable node/no-deprecated-api */
-var assert = require('assert')
-
-module.exports = Trie
+const assert = require('assert')
 
 // create a new trie
 // null -> obj
-function Trie () {
-  if (!(this instanceof Trie)) return new Trie()
-  this.trie = { nodes: {} }
-}
-
-// create a node on the trie at route
-// and return a node
-// str -> obj
-Trie.prototype.create = function (route) {
-  assert.equal(typeof route, 'string', 'route should be a string')
-  // strip leading '/' and split routes
-  var routes = route.replace(/^\//, '').split('/')
-
-  function createNode (index, trie) {
-    var thisRoute = (has(routes, index) && routes[index])
-    if (thisRoute === false) return trie
-
-    var node = null
-    if (/^:|^\*/.test(thisRoute)) {
-      // if node is a name match, set name and append to ':' node
-      if (!has(trie.nodes, '$$')) {
-        node = { nodes: {} }
-        trie.nodes.$$ = node
-      } else {
-        node = trie.nodes.$$
-      }
-
-      if (thisRoute[0] === '*') {
-        trie.wildcard = true
-      }
-
-      trie.name = thisRoute.replace(/^:|^\*/, '')
-    } else if (!has(trie.nodes, thisRoute)) {
-      node = { nodes: {} }
-      trie.nodes[thisRoute] = node
-    } else {
-      node = trie.nodes[thisRoute]
-    }
-
-    // we must recurse deeper
-    return createNode(index + 1, node)
+class Trie {
+  constructor () {
+    this.trie = { nodes: {} }
   }
 
-  return createNode(0, this.trie)
-}
+  // create a node on the trie at route
+  // and return a node
+  // str -> obj
+  create (route) {
+    assert.equal(typeof route, 'string', 'route should be a string')
+    // strip leading '/' and split routes
+    const routes = route.replace(/^\//, '').split('/')
 
-// match a route on the trie
-// and return the node
-// str -> obj
-Trie.prototype.match = function (route) {
-  assert.equal(typeof route, 'string', 'route should be a string')
+    function createNode (index, trie) {
+      const thisRoute = (has(routes, index) && routes[index])
+      if (thisRoute === false) return trie
 
-  var routes = route.replace(/^\//, '').split('/')
-  var params = {}
+      let node = null
+      if (/^:|^\*/.test(thisRoute)) {
+        // if node is a name match, set name and append to ':' node
+        if (!has(trie.nodes, '$$')) {
+          node = { nodes: {} }
+          trie.nodes.$$ = node
+        } else {
+          node = trie.nodes.$$
+        }
 
-  function search (index, trie) {
-    // either there's no match, or we're done searching
-    if (trie === undefined) return undefined
-    var thisRoute = routes[index]
-    if (thisRoute === undefined) return trie
+        if (thisRoute[0] === '*') {
+          trie.wildcard = true
+        }
 
-    if (has(trie.nodes, thisRoute)) {
-      // match regular routes first
-      return search(index + 1, trie.nodes[thisRoute])
-    } else if (trie.name) {
+        trie.name = thisRoute.replace(/^:|^\*/, '')
+      } else if (!has(trie.nodes, thisRoute)) {
+        node = { nodes: {} }
+        trie.nodes[thisRoute] = node
+      } else {
+        node = trie.nodes[thisRoute]
+      }
+
+      // we must recurse deeper
+      return createNode(index + 1, node)
+    }
+
+    return createNode(0, this.trie)
+  }
+
+  // match a route on the trie
+  // and return the node
+  // str -> obj
+  match (route) {
+    assert.equal(typeof route, 'string', 'route should be a string')
+
+    const routes = route.replace(/^\//, '').split('/')
+    const params = {}
+
+    function search (index, trie) {
+      // either there's no match, or we're done searching
+      if (trie === undefined) return undefined
+      const thisRoute = routes[index]
+      if (thisRoute === undefined) return trie
+
+      if (has(trie.nodes, thisRoute)) {
+        // match regular routes first
+        return search(index + 1, trie.nodes[thisRoute])
+      }
       // match named routes
-      try {
-        params[trie.name] = decodeURIComponent(thisRoute)
-      } catch (e) {
-        return search(index, undefined)
+      if (trie.name) {
+        try {
+          params[trie.name] = decodeURIComponent(thisRoute)
+        } catch (e) {
+          return search(index, undefined)
+        }
+        return search(index + 1, trie.nodes.$$)
       }
-      return search(index + 1, trie.nodes.$$)
-    } else if (trie.wildcard) {
       // match wildcards
-      try {
-        params.wildcard = decodeURIComponent(routes.slice(index).join('/'))
-      } catch (e) {
-        return search(index, undefined)
+      if (trie.wildcard) {
+        try {
+          params.wildcard = decodeURIComponent(routes.slice(index).join('/'))
+        } catch (e) {
+          return search(index, undefined)
+        }
+        // return early, or else search may keep recursing through the wildcard
+        return trie.nodes.$$
       }
-      // return early, or else search may keep recursing through the wildcard
-      return trie.nodes.$$
-    } else {
       // no matches found
       return search(index + 1)
     }
+
+    const node = search(0, this.trie)
+
+    if (!node) return undefined
+    return { ...node, params }
   }
 
-  var node = search(0, this.trie)
+  // mount a trie onto a node at route
+  // (str, obj) -> null
+  mount (route, trie) {
+    assert.equal(typeof route, 'string', 'route should be a string')
+    assert.equal(typeof trie, 'object', 'trie should be a object')
 
-  if (!node) return undefined
-  node = Object.assign({}, node)
-  node.params = params
-  return node
-}
+    const split = route.replace(/^\//, '').split('/')
+    let node = null
+    let key = null
 
-// mount a trie onto a node at route
-// (str, obj) -> null
-Trie.prototype.mount = function (route, trie) {
-  assert.equal(typeof route, 'string', 'route should be a string')
-  assert.equal(typeof trie, 'object', 'trie should be a object')
+    if (split.length === 1) {
+      key = split[0]
+      node = this.create(key)
+    } else {
+      const head = split.join('/')
+      key = split[0]
+      node = this.create(head)
+    }
 
-  var split = route.replace(/^\//, '').split('/')
-  var node = null
-  var key = null
+    Object.assign(node.nodes, trie.nodes)
+    if (trie.name) node.name = trie.name
 
-  if (split.length === 1) {
-    key = split[0]
-    node = this.create(key)
-  } else {
-    var head = split.join('/')
-    key = split[0]
-    node = this.create(head)
-  }
-
-  Object.assign(node.nodes, trie.nodes)
-  if (trie.name) node.name = trie.name
-
-  // delegate properties from '/' to the new node
-  // '/' cannot be reached once mounted
-  if (node.nodes['']) {
-    Object.keys(node.nodes['']).forEach(function (key) {
-      if (key === 'nodes') return
-      node[key] = node.nodes[''][key]
-    })
-    Object.assign(node.nodes, node.nodes[''].nodes)
-    delete node.nodes[''].nodes
+    // delegate properties from '/' to the new node
+    // '/' cannot be reached once mounted
+    if (node.nodes['']) {
+      Object.keys(node.nodes['']).forEach(key => {
+        if (key === 'nodes') return
+        node[key] = node.nodes[''][key]
+      })
+      Object.assign(node.nodes, node.nodes[''].nodes)
+      delete node.nodes[''].nodes
+    }
   }
 }
 
 function has (object, property) {
   return Object.prototype.hasOwnProperty.call(object, property)
 }
+
+module.exports = () => new Trie()

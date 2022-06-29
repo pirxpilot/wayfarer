@@ -1,8 +1,8 @@
-var wayfarer = require('wayfarer')
-var match = require('hash-match')
+const wayfarer = require('wayfarer')
+const match = require('hash-match')
 
 // register router
-var router = wayfarer('/')
+const router = wayfarer('/')
 router.on('/', () => console.log('/'))
 router.on('/skills', () => console.log('skills'))
 router.on('/about', () => console.log('about'))

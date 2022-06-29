@@ -1,7 +1,9 @@
-# wayfarer [![stability][0]][1]
-[![npm version][2]][3] [![build status][4]][5] [![test coverage][6]][7]
-[![downloads][8]][9] [![js-standard-style][10]][11]
+[![NPM version][npm-image]][npm-url]
+[![Build Status][build-image]][build-url]
+[![Dependency Status][deps-image]][deps-url]
+# wayfarer
 
+Fork of [wayfarer].
 Composable [trie based](https://en.wikipedia.org/wiki/Trie) router.  It's
 faster than traditional, linear, regular expression-matching routers, although
 insignficantly, and scales with the number of routes.
@@ -140,17 +142,13 @@ strip it of querystrings and hashes using the
 ## License
 [MIT](https://tldrlegal.com/license/mit-license)
 
-[0]: https://img.shields.io/badge/stability-2%20stable-brightgreen.svg?style=flat-square
-[1]: https://nodejs.org/api/documentation.html#documentation_stability_index
-[2]: https://img.shields.io/npm/v/wayfarer.svg?style=flat-square
-[3]: https://npmjs.org/package/wayfarer
-[4]: https://img.shields.io/travis/choojs/wayfarer/master.svg?style=flat-square
-[5]: https://travis-ci.org/choojs/wayfarer
-[6]: https://img.shields.io/codecov/c/github/choojs/wayfarer/master.svg?style=flat-square
-[7]: https://codecov.io/github/choojs/wayfarer
-[8]: http://img.shields.io/npm/dm/wayfarer.svg?style=flat-square
-[9]: https://npmjs.org/package/wayfarer
-[10]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
-[11]: https://github.com/feross/standard
-[12]: http://github.com/raynos/mercury
-[13]: http://github.com/raynos/virtual-dom
+[wayfarer]: https://npmjs.org/package/wayfarer
+
+[npm-image]: https://img.shields.io/npm/v/@pirxpilot/wayfarer
+[npm-url]: https://npmjs.org/package/@pirxpilot/wayfarer
+
+[build-url]: https://github.com/pirxpilot/wayfarer/actions/workflows/check.yaml
+[build-image]: https://img.shields.io/github/workflow/status/pirxpilot/wayfarer/check
+
+[deps-image]: https://img.shields.io/librariesio/release/npm/@pirxpilot/wayfarer
+[deps-url]: https://libraries.io/npm/@pirxpilot%2Fwayfarer

@@ -1,3 +1,11 @@
+
+1.0.0 / 2022-06-29
+==================
+
+ * replace `nanoassert` with `@pirxpilot/nanoassert`
+ * modernize code
+ * rename to @pirxpilot/wayfarer
+
 # Change Log All notable changes to this project will be documented in this
 file. This project adheres to [Semantic Versioning](http://semver.org/).
 

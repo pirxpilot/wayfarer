@@ -1,6 +1,6 @@
 {
   "name": "@pirxpilot/wayfarer",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Composable trie based router",
   "main": "index.js",
   "scripts": {

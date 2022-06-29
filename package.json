@@ -33,7 +33,7 @@
   "devDependencies": {
     "noop2": "^2.0.0",
     "standard": "~17",
-    "tape": "^4.6.2"
+    "tape": "~5"
   },
   "files": [
     "index.js",

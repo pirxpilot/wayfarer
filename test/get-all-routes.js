@@ -1,5 +1,5 @@
-const wayfarer = require('../');
-const getAllRoutes = require('../get-all-routes');
+const wayfarer = require('..');
+const getAllRoutes = require('../lib/get-all-routes');
 const tape = require('tape');
 
 tape('getAllRoutes', t => {

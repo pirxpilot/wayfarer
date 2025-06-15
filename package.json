@@ -37,8 +37,6 @@
   },
   "files": [
     "index.js",
-    "get-all-routes.js",
-    "trie.js",
-    "walk.js"
+    "lib"
   ]
 }

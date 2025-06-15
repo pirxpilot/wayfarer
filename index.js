@@ -1,5 +1,5 @@
 const assert = require('assert');
-const trie = require('./trie');
+const trie = require('./lib/trie');
 
 module.exports = Wayfarer;
 

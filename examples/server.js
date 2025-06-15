@@ -1,17 +1,20 @@
-const methodist = require('methodist')
-const wayfarer = require('wayfarer')
-const http = require('http')
+const methodist = require('methodist');
+const wayfarer = require('wayfarer');
+const http = require('http');
 
-const server = http.createServer((req, res) => {
-  const router = wayfarer()
-  const method = methodist(req, router)
+const server = http.createServer((req, _res) => {
+  const router = wayfarer();
+  const method = methodist(req, router);
 
-  router.on('/hello', method({
-    all: params => console.log('any route matches'),
-    get: params => console.log('get')
-  }))
+  router.on(
+    '/hello',
+    method({
+      all: _params => console.log('any route matches'),
+      get: _params => console.log('get')
+    })
+  );
 
-  router(req)
-})
+  router(req);
+});
 
-server.listen(1337)
+server.listen(1337);

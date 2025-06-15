@@ -4,10 +4,12 @@
   "description": "Composable trie based router",
   "main": "index.js",
   "scripts": {
-    "lint": "standard",
-    "test": "NODE_ENV=test tape test/*"
+    "test": "make check"
   },
-  "repository": "pirxpilot/wayfarer",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pirxpilot/wayfarer.git"
+  },
   "keywords": [
     "router",
     "trie",
@@ -31,14 +33,10 @@
     "@pirxpilot/nanoassert": "^1.0.0"
   },
   "devDependencies": {
-    "noop2": "^2.0.0",
-    "standard": "~17",
-    "tape": "~5"
+    "@biomejs/biome": "^1.9.4"
   },
   "files": [
     "index.js",
-    "get-all-routes.js",
-    "trie.js",
-    "walk.js"
+    "lib"
   ]
 }

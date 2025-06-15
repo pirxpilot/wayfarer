@@ -148,7 +148,7 @@ strip it of querystrings and hashes using the
 [npm-url]: https://npmjs.org/package/@pirxpilot/wayfarer
 
 [build-url]: https://github.com/pirxpilot/wayfarer/actions/workflows/check.yaml
-[build-image]: https://img.shields.io/github/workflow/status/pirxpilot/wayfarer/check
+[build-image]: https://img.shields.io/github/actions/workflow/status/pirxpilot/wayfarer/check.yaml?branch=main
 
 [deps-image]: https://img.shields.io/librariesio/release/npm/@pirxpilot/wayfarer
 [deps-url]: https://libraries.io/npm/@pirxpilot%2Fwayfarer

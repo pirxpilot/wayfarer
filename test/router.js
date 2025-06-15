@@ -1,6 +1,5 @@
-const test = require('node:test');
-
-const wayfarer = require('../');
+import test from 'node:test';
+import wayfarer from '../index.js';
 
 const noop = () => {};
 

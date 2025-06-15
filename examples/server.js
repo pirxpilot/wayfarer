@@ -1,6 +1,6 @@
-const methodist = require('methodist');
-const wayfarer = require('wayfarer');
-const http = require('http');
+import http from 'node:http';
+import methodist from 'methodist';
+import wayfarer from 'wayfarer';
 
 const server = http.createServer((req, _res) => {
   const router = wayfarer();

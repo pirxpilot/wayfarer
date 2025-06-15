@@ -1,7 +1,6 @@
-const test = require('node:test');
-
-const wayfarer = require('..');
-const getAllRoutes = require('../lib/get-all-routes');
+import test from 'node:test';
+import wayfarer from '../index.js';
+import getAllRoutes from './helper/get-all-routes.js';
 
 test('getAllRoutes', async t => {
   await t.test('should assert input types', t => {

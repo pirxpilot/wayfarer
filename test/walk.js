@@ -1,17 +1,19 @@
+const test = require('node:test');
+
 const wayfarer = require('../');
 const walk = require('../lib/walk');
-const noop = require('noop2');
-const tape = require('tape');
 
-tape('walk', t => {
-  t.test('should assert input types', t => {
+const noop = () => {};
+
+test('walk', async t => {
+  await t.test('should assert input types', t => {
     t.plan(3);
-    t.throws(walk.bind(null), /function/, 'assert first arg is function');
-    t.throws(walk.bind(null, noop), /function/, 'assert second arg is a function');
-    t.throws(walk.bind(null, noop, noop), /object/, 'assert trie exists');
+    t.assert.throws(walk.bind(null), /function/, 'assert first arg is function');
+    t.assert.throws(walk.bind(null, noop), /function/, 'assert second arg is a function');
+    t.assert.throws(walk.bind(null, noop, noop), /object/, 'assert trie exists');
   });
 
-  t.test('should walk a trie', t => {
+  await t.test('should walk a trie', t => {
     t.plan(2);
     const router = wayfarer();
     router.on('/foo', (x, y) => x * y);
@@ -22,11 +24,11 @@ tape('walk', t => {
       return (_params, x) => cb(x, y);
     });
 
-    t.equal(router('/foo', 4), 8, 'multiply');
-    t.equal(router('/bar', 8), 4, 'divide');
+    t.assert.equal(router('/foo', 4), 8, 'multiply');
+    t.assert.equal(router('/bar', 8), 4, 'divide');
   });
 
-  t.test('should walk a nested trie', t => {
+  await t.test('should walk a nested trie', t => {
     t.plan(3);
     const router = wayfarer();
     router.on('/foo/baz', (x, y) => x * y);
@@ -38,12 +40,12 @@ tape('walk', t => {
       return (_params, x) => cb(x, y);
     });
 
-    t.equal(router('/foo/baz', 4), 8, 'multiply');
-    t.equal(router('/bar/bin/barb', 8), 4, 'divide');
-    t.equal(router('/bar/bin/bla', 8), 4, 'divide');
+    t.assert.equal(router('/foo/baz', 4), 8, 'multiply');
+    t.assert.equal(router('/bar/bin/barb', 8), 4, 'divide');
+    t.assert.equal(router('/bar/bin/bla', 8), 4, 'divide');
   });
 
-  t.test('should walk partials', t => {
+  await t.test('should walk partials', t => {
     t.plan(4);
     const router = wayfarer();
     router.on('/foo', route => route);
@@ -53,9 +55,9 @@ tape('walk', t => {
 
     walk(router, (route, cb) => () => cb(route));
 
-    t.equal(router('/foo'), '/foo', 'no partials');
-    t.equal(router('/bleep'), '/:foo', 'one partial');
-    t.equal(router('/bleep/bar'), '/:foo/bar', 'partial and normal');
-    t.equal(router('/bleep/bloop'), '/:foo/:bar', 'two partials');
+    t.assert.equal(router('/foo'), '/foo', 'no partials');
+    t.assert.equal(router('/bleep'), '/:foo', 'one partial');
+    t.assert.equal(router('/bleep/bar'), '/:foo/bar', 'partial and normal');
+    t.assert.equal(router('/bleep/bloop'), '/:foo/:bar', 'two partials');
   });
 });

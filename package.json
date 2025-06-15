@@ -31,8 +31,8 @@
     "@pirxpilot/nanoassert": "^1.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "noop2": "^2.0.0",
-    "standard": "~17",
     "tape": "~5"
   },
   "files": [

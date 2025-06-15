@@ -1,9 +1,15 @@
 check: lint test
 
 lint:
-	./node_modules/.bin/standard
+	./node_modules/.bin/biome ci
+
+format:
+	./node_modules/.bin/biome check --fix
 
 test:
-	./node_modules/.bin/tape test/*.js
+	node --test $(TEST_OPTS)
 
-.PHONY: check lint test
+test-cov: TEST_OPTS := --experimental-test-coverage
+test-cov: test
+
+.PHONY: check format lint test test-cov

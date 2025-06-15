@@ -1,11 +1,9 @@
-const assert = require('assert');
-const trie = require('./lib/trie');
-
-module.exports = Wayfarer;
+import assert from 'assert';
+import trie from './lib/trie.js';
 
 // create a router
 // str -> obj
-function Wayfarer(dft) {
+export default function Wayfarer(dft) {
   const _default = (dft || '').replace(/^\//, '');
   const _trie = trie();
 

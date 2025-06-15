@@ -1,6 +1,4 @@
-const assert = require('assert');
-
-module.exports = getAllRoutes;
+import assert from 'node:assert';
 
 function transform({ nodes, name }, prev = '/') {
   const routes = {};
@@ -23,7 +21,7 @@ function transform({ nodes, name }, prev = '/') {
 
 // walk a wayfarer trie
 // (obj, fn) -> null
-function getAllRoutes(router) {
+export default function getAllRoutes(router) {
   assert.equal(typeof router, 'function', 'wayfarer.getAllRoutes: router should be an function');
 
   const trie = router._trie;

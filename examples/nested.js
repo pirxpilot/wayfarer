@@ -1,4 +1,4 @@
-const wayfarer = require('wayfarer');
+import wayfarer from 'wayfarer';
 
 const userRouter = wayfarer('err');
 const repoRouter = wayfarer();

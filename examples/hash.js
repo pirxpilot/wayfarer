@@ -1,5 +1,5 @@
-const wayfarer = require('wayfarer');
-const match = require('hash-match');
+import match from 'hash-match';
+import wayfarer from 'wayfarer';
 
 // register router
 const router = wayfarer('/');

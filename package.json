@@ -3,7 +3,10 @@
   "version": "2.0.0",
   "description": "Composable trie based router",
   "type": "module",
-  "exports": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./get-all-routes": "./lib/get-all-routes.js"
+  },
   "scripts": {
     "test": "make check"
   },
